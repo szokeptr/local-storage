@@ -11,8 +11,12 @@ function accessor (key, value) {
   return set(key, value);
 }
 
-function get (key) {
-  return JSON.parse(ls.getItem(key));
+function get (key, defaultValue) {
+  var item = ls.getItem(key);
+  if (item === null && typeof defaultValue !== 'undefined') {
+    return defaultValue;
+  }
+  return JSON.parse(item);
 }
 
 function set (key, value) {
@@ -22,6 +26,10 @@ function set (key, value) {
   } catch (e) {
     return false;
   }
+}
+
+function has (key) {
+  return ls.getItem(key) !== null;
 }
 
 function remove (key) {
@@ -34,6 +42,7 @@ function clear () {
 
 accessor.set = set;
 accessor.get = get;
+accessor.has = has;
 accessor.remove = remove;
 accessor.clear = clear;
 accessor.on = tracking.on;

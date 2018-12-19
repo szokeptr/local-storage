@@ -41,9 +41,10 @@ ls('foo');
 // <- 'bar'
 ```
 
-## `ls.get(key)`
+## `ls.get(key, defaultValue?)`
 
 Returns value under `key` in local storage. Equivalent to `ls(key)`. Internally parses the value from JSON before returning it.
+If the optional `defaultValue` is provided and value under `key` in local storage is `null` returns the value of `defaultValue`.
 
 ##### Example
 
@@ -55,6 +56,28 @@ ls('foo', 'bar');
 
 ls.get('foo');
 // <- 'bar'
+
+ls.get('bar', 'foo');
+// <- 'foo'
+```
+
+## `ls.has(key)`
+
+Checks if `key` in local storage is set (if it's not equal to `null`).
+
+##### Example
+
+```js
+var ls = require('local-storage');
+
+ls('foo', 'bar');
+// <- true
+
+ls.has('foo');
+// <- true
+
+ls.has('bar');
+// <- 'false'
 ```
 
 ## `ls.set(key, value)`
